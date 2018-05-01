@@ -42,7 +42,7 @@ public class SoftwareControlledMotor implements VelocityControlledMotor, Positio
 
         // Cascaded PID with inner loop running 5x faster
         velocityController = new PIDController(1, 0, 0,
-                VelocitySource.toPIDSource(velocitySource),
+                VelocitySource.toDisplacementPIDSource(velocitySource),
                 adjustedTorqueController, 0.010);
 
         positionController = new PIDController(1, 0, 0,

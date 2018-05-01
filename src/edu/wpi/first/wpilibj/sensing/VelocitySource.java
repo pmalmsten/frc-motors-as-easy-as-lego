@@ -18,7 +18,18 @@ public interface VelocitySource {
         return () -> source.getVelocity() * scaleFactor;
     }
 
-    static PIDSource toPIDSource(VelocitySource source) {
+    /**
+     * Produces a PIDSource that causes consuming {@link edu.wpi.first.wpilibj.PIDController}s to
+     * operate in traditional PID control mode as opposed to the "ID" control mode the controller uses
+     * when a {@link PIDSourceType#kRate} is provided.
+     *
+     * This is useful when the output of the consuming {@link edu.wpi.first.wpilibj.PIDController}
+     * will be interpreted as a torque to be sent to a motor instead of voltage.
+     *
+     * @param source The {@link VelocitySource} to convert to {@link PIDSource}.
+     * @return A source which marks given values as {@link PIDSourceType#kDisplacement}.
+     */
+    static PIDSource toDisplacementPIDSource(VelocitySource source) {
         return new PIDSource() {
             @Override
             public void setPIDSourceType(PIDSourceType pidSource) {
